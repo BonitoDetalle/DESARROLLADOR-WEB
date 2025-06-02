@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manuel - Desarrollador Web</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            transform: translateY(0);
+            transition: all 0.6s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .container:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-section {
+            margin-bottom: 2rem;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            border: 4px solid #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            transition: all 0.4s ease;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+
+        .highlight {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-around;
+            margin: 2.5rem 0;
+            gap: 1rem;
+        }
+
+        .feature {
+            flex: 1;
+            padding: 1.5rem 1rem;
+            border-radius: 20px;
+            margin: 0 0.5rem;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px) scale(1.05);
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .feature::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .feature:hover::before {
+            opacity: 1;
+            animation: shine 0.6s ease-in-out;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover .feature-icon {
+            transform: scale(1.2) rotate(5deg);
+            filter: drop-shadow(0 8px 16px rgba(102, 126, 234, 0.3));
+        }
+
+        .feature-text {
+            font-size: 1.1rem;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover .feature-text {
+            color: #667eea;
+        }
+
+        .feature-detail {
+            font-size: 0.8rem;
+            color: #666;
+            line-height: 1.4;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover .feature-detail {
+            opacity: 1;
+            color: #555;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+            background: linear-gradient(45deg, #764ba2, #667eea);
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            bottom: 20%;
+            left: 15%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+        }
+
+        .close:hover {
+            color: #667eea;
+        }
+
+        .modal-content h3 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .contact-info {
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateX(5px);
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+        }
+
+        .contact-icon {
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            width: 30px;
+        }
+
+        .contact-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .social-links h4 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+        }
+
+        .social-btn {
+            padding: 0.8rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+
+        .facebook {
+            background: #3b5998;
+        }
+
+        .linkedin {
+            background: #0077b5;
+        }
+
+        .github {
+            background: #333;
+        }
+
+        /* Feature Modal Styles */
+        .feature-modal {
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-modal-content {
+            background: white;
+            margin: 2% auto;
+            padding: 2rem;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .feature-modal h3 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Design Gallery */
+        .design-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .design-card {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 15px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            transition: all 0.3s ease;
+        }
+
+        .design-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .design-preview {
+            width: 100%;
+            height: 120px;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .design1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+        }
+
+        .design1::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+        }
+
+        .design2 {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            position: relative;
+        }
+
+        .design2::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+        }
+
+        .design3 {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            position: relative;
+        }
+
+        .design3::before {
+            content: '';
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+        }
+
+        .design4 {
+            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+            position: relative;
+        }
+
+        .design4::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+        }
+
+        /* Speed Demo */
+        .speed-demo {
+            text-align: center;
+        }
+
+        .speed-test {
+            margin-bottom: 2rem;
+        }
+
+        .speed-bar {
+            width: 100%;
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .speed-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 2s ease;
+            border-radius: 10px;
+        }
+
+        .optimization-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .opt-card {
+            padding: 1.5rem;
+            border-radius: 15px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .opt-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .opt-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .opt-card h4 {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        /* Responsive Demo */
+        .device-showcase {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .device {
+            text-align: center;
+        }
+
+        .device.mobile .screen {
+            width: 80px;
+            height: 140px;
+            background: #333;
+            border-radius: 15px;
+            padding: 8px;
+        }
+
+        .device.tablet .screen {
+            width: 120px;
+            height: 160px;
+            background: #333;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .device.desktop .screen {
+            width: 200px;
+            height: 120px;
+            background: #333;
+            border-radius: 8px;
+            padding: 8px;
+        }
+
+        .demo-content {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-header {
+            height: 20%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+
+        .demo-nav, .demo-sidebar, .demo-main, .demo-aside, .demo-body {
+            background: #f0f0f0;
+            margin: 2px;
+            border-radius: 2px;
+        }
+
+        .mobile-content .demo-nav {
+            height: 15%;
+        }
+
+        .mobile-content .demo-body {
+            height: 60%;
+        }
+
+        .tablet-content, .desktop-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tablet-content .demo-nav, .desktop-content .demo-nav {
+            height: 20%;
+        }
+
+        .feature-details {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .feature-details h4 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-details li {
+            padding: 0.5rem 0;
+            color: #666;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .name {
+                font-size: 2rem;
+            }
+            
+            .features {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .feature {
+                margin: 0;
+            }
+
+            .modal-content {
+                margin: 10% auto;
+                padding: 1.5rem;
+            }
+
+            .social-buttons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+
+    <div class="container">
+        <div class="profile-section">
+            <!--div class="profile-image">M</div-->
+             <img src="imagen/WhatsApp Image 2025-06-01 at 8.35.27 PM.jpeg" alt="" width="140" height="160">
+            <h1 class="name">Manuel</h1>
+           
+            <p class="title">Desarrollador Web Profesional</p>
+        </div>
+
+        <p class="description">
+            Creo <span class="highlight">páginas web únicas y hermosas</span> para todo tipo de proyectos. 
+            Desde sitios personales hasta plataformas comerciales, transformo tus ideas en 
+            <span class="highlight">experiencias digitales extraordinarias</span>.
+        </p>
+
+        <div class="features">
+            <div class="feature" onclick="mostrarDiseño()">
+                <div class="feature-icon">🎨</div>
+                <div class="feature-text">Diseño Único</div>
+                <div class="feature-detail">Interfaces modernas y atractivas que causan impacto</div>
+            </div>
+            <div class="feature" onclick="mostrarRapidez()">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-text">Ultra Rápido</div>
+                <div class="feature-detail">Carga en segundos con optimización avanzada</div>
+            </div>
+            <div class="feature" onclick="mostrarResponsivo()">
+                <div class="feature-icon">📱</div>
+                <div class="feature-text">Responsivo</div>
+                <div class="feature-detail">Perfecto en móvil, tablet y escritorio</div>
+            </div>
+        </div>
+
+        <button class="cta-button" onclick="mostrarContacto()">¡Contáctame Ahora!</button>
+        <div id="contactModal" class="modal">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+            <div class="modal-content">
+                <span class="close" onclick="cerrarModal()">&times;</span>
+                <h3>🌐 Redes Sociales</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon">📘</span>
+                        <a href="https://www.facebook.com/profile.php?id=61574946013818&mibextid=ZbWKwL" target="_blank" class="contact-link">Facebook</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">📱</span>
+                        <a href="https://www.tiktok.com/@manuel_.0601?_t=ZM-8wrCHeb5nrs&_r=1" target="_blank" class="contact-link">TikTok</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <a href="tel:+51912798469" class="contact-link">+51 912 798 469</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function mostrarContacto() {
+            document.getElementById('contactModal').style.display = 'block';
+            setTimeout(() => {
+                document.querySelector('.modal-content').style.transform = 'scale(1)';
+                document.querySelector('.modal-content').style.opacity = '1';
+            }, 10);
+        }
+
+        function mostrarDiseño() {
+            const modalContent = `
+                <div class="feature-modal">
+                    <div class="feature-modal-content">
+                        <span class="close" onclick="cerrarFeatureModal()">&times;</span>
+                        <h3>🎨 DISEÑO ÚNICO</h3>
+                        <div class="design-gallery">
+                            <div class="design-card">
+                                <div class="design-preview design1"></div>
+                                <p>Landing Page Moderna</p>
+                            </div>
+                            <div class="design-card">
+                                <div class="design-preview design2"></div>
+                                <p>Dashboard Profesional</p>
+                            </div>
+                            <div class="design-card">
+                                <div class="design-preview design3"></div>
+                                <p>E-commerce Elegante</p>
+                            </div>
+                            <div class="design-card">
+                                <div class="design-preview design4"></div>
+                                <p>Portfolio Creativo</p>
+                            </div>
+                        </div>
+                        <div class="feature-details">
+                            <h4>✨ Lo que incluye:</h4>
+                            <ul>
+                                <li>🎭 Animaciones fluidas y micro-interacciones</li>
+                                <li>🌈 Paletas de colores únicas y profesionales</li>
+                                <li>💫 Tipografías elegantes y jerarquías visuales</li>
+                                <li>🎪 Diseño centrado en la experiencia del usuario</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalContent);
+            setTimeout(() => {
+                document.querySelector('.feature-modal-content').style.transform = 'scale(1)';
+                document.querySelector('.feature-modal-content').style.opacity = '1';
+            }, 10);
+        }
+
+        function mostrarRapidez() {
+            const modalContent = `
+                <div class="feature-modal">
+                    <div class="feature-modal-content">
+                        <span class="close" onclick="cerrarFeatureModal()">&times;</span>
+                        <h3>⚡ ULTRA RÁPIDO</h3>
+                        <div class="speed-demo">
+                            <div class="speed-test">
+                                <div class="speed-bar">
+                                    <div class="speed-fill"></div>
+                                </div>
+                                <p>Tiempo de carga: <strong>1.2 segundos</strong></p>
+                            </div>
+                            <div class="optimization-grid">
+                                <div class="opt-card">
+                                    <div class="opt-icon">🚀</div>
+                                    <h4>Código Optimizado</h4>
+                                    <p>Minificado y comprimido</p>
+                                </div>
+                                <div class="opt-card">
+                                    <div class="opt-icon">📦</div>
+                                    <h4>Imágenes WebP</h4>
+                                    <p>90% menos peso</p>
+                                </div>
+                                <div class="opt-card">
+                                    <div class="opt-icon">⚙️</div>
+                                    <h4>CDN Global</h4>
+                                    <p>Entrega ultrarrápida</p>
+                                </div>
+                                <div class="opt-card">
+                                    <div class="opt-icon">🔧</div>
+                                    <h4>Cache Inteligente</h4>
+                                    <p>Carga instantánea</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalContent);
+            setTimeout(() => {
+                document.querySelector('.feature-modal-content').style.transform = 'scale(1)';
+                document.querySelector('.feature-modal-content').style.opacity = '1';
+                document.querySelector('.speed-fill').style.width = '95%';
+            }, 10);
+        }
+
+        function mostrarResponsivo() {
+            const modalContent = `
+                <div class="feature-modal">
+                    <div class="feature-modal-content">
+                        <span class="close" onclick="cerrarFeatureModal()">&times;</span>
+                        <h3>📱 RESPONSIVO</h3>
+                        <div class="responsive-demo">
+                            <div class="device-showcase">
+                                <div class="device mobile">
+                                    <div class="screen">
+                                        <div class="demo-content mobile-content">
+                                            <div class="demo-header"></div>
+                                            <div class="demo-nav"></div>
+                                            <div class="demo-body"></div>
+                                        </div>
+                                    </div>
+                                    <p>📱 Móvil</p>
+                                </div>
+                                <div class="device tablet">
+                                    <div class="screen">
+                                        <div class="demo-content tablet-content">
+                                            <div class="demo-header"></div>
+                                            <div class="demo-sidebar"></div>
+                                            <div class="demo-main"></div>
+                                        </div>
+                                    </div>
+                                    <p>📟 Tablet</p>
+                                </div>
+                                <div class="device desktop">
+                                    <div class="screen">
+                                        <div class="demo-content desktop-content">
+                                            <div class="demo-header"></div>
+                                            <div class="demo-sidebar"></div>
+                                            <div class="demo-main"></div>
+                                            <div class="demo-aside"></div>
+                                        </div>
+                                    </div>
+                                    <p>💻 Desktop</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalContent);
+            setTimeout(() => {
+                document.querySelector('.feature-modal-content').style.transform = 'scale(1)';
+                document.querySelector('.feature-modal-content').style.opacity = '1';
+            }, 10);
+        }
+
+        function cerrarFeatureModal() {
+            const modal = document.querySelector('.feature-modal');
+            if (modal) {
+                modal.querySelector('.feature-modal-content').style.transform = 'scale(0.8)';
+                modal.querySelector('.feature-modal-content').style.opacity = '0';
+                setTimeout(() => {
+                    modal.remove();
+                }, 300);
+            }
+        }
+
+        function cerrarModal() {
+            document.querySelector('.modal-content').style.transform = 'scale(0.8)';
+            document.querySelector('.modal-content').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('contactModal').style.display = 'none';
+            }, 300);
+        }
+
+        // Cerrar modal al hacer click fuera
+        window.onclick = function(event) {
+            const modal = document.getElementById('contactModal');
+            if (event.target == modal) {
+                cerrarModal();
+            }
+        }
+
+        // Efecto de entrada suave
+        window.addEventListener('load', function() {
+            document.querySelector('.container').style.opacity = '0';
+            document.querySelector('.container').style.transform = 'translateY(50px)';
+            
+            setTimeout(() => {
+                document.querySelector('.container').style.transition = 'all 1s ease';
+                document.querySelector('.container').style.opacity = '1';
+                document.querySelector('.container').style.transform = 'translateY(0)';
+            }, 100);
+        });
+
+        // Efecto parallax suave en el mouse
+        document.addEventListener('mousemove', (e) => {
+            const container = document.querySelector('.container');
+            const x = (e.clientX / window.innerWidth) * 2 - 1;
+            const y = (e.clientY / window.innerHeight) * 2 - 1;
+            
+            
+        });
+
+        document.addEventListener('mouseleave', () => {
+            const container = document.querySelector('.container');
+            container.style.transform = 'translateY(-10px)';
+        });
+    </script>
+</body>
+</html>
